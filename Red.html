@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Painel Custom</title>
+  <style>
+    body {
+      background-color: #1a1a1a;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .painel,
+    .login {
+      background: #2b0000;
+      border: 2px solid red;
+      padding: 20px;
+      border-radius: 10px;
+      width: 400px;
+      display: none; /* Oculta o painel e o login inicialmente */
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      background: #000;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      border: 1px solid #444;
+      transition: 0.2s;
+      user-select: none;
+      min-width: 70px;
+    }
+
+    .tab:hover {
+      background: #550000;
+    }
+
+    .tab.active {
+      background: red;
+    }
+
+    .content {
+      display: none;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    select,
+    input[type="range"] {
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    .login {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .login input {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #444;
+      border-radius: 5px;
+    }
+
+    .freefire-content {
+      color: #f0f0f0;
+    }
+
+    .freefire-content code {
+      background: #000;
+      padding: 8px;
+      border-radius: 4px;
+      display: block;
+      margin-top: 10px;
+      font-family: monospace;
+      user-select: all;
+    }
+
+    /* Estilo do botão Injetar */
+    #injectBtn {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      background-color: red;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #injectBtn:hover:not(:disabled) {
+      background-color: #b30000;
+    }
+
+    #injectBtn:disabled {
+      background-color: #7a0000;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+  <div class="login">
+    <h2>Login</h2>
+    <label for="key">Chave de Acesso:</label>
+    <input
+      type="text"
+      id="key"
+      placeholder="Digite sua chave aqui"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
+    />
+    <button id="loginBtn">Entrar</button>
+    <p id="error" style="color: red; display: none;">
+      Chave inválida ou já utilizada. Tente novamente.
+    </p>
+  </div>
+
+  <div class="painel">
+    <div class="tabs">
+      <div class="tab active" data-index="0">Aimbot</div>
+      <div class="tab" data-index="1">Visuals</div>
+      <div class="tab" data-index="2">Misc</div>
+      <div class="tab" data-index="3">Settings</div>
+      <div class="tab" data-index="4">Free Fire</div>
+    </div>
+
+    <div class="content active">
+      <label><input type="checkbox" /> Ativar Aimbot</label>
+      <label><input type="checkbox" /> Exibir Círculo do FOV</label>
+      <label>AIMFOV:</label>
+      <input type="range" min="0" max="100" value="50" />
+      <label>Target:</label>
+      <select>
+        <option value="cabeca">Cabeça</option>
+        <option value="torso">Torso</option>
+        <option value="norecoil">Norecoil</option>
+        <option value="auxilio_sensi">Auxílio sensi</option>
+      </select>
+      <label>Tipo de Aimbot:</label>
+      <label><input type="radio" name="tipo" /> Ao Atirar</label>
+      <label><input type="radio" name="tipo" /> Ao Olhar</label>
+    </div>
+
+    <div class="content">
+      <label><input type="checkbox" /> Enemy ESP</label>
+      <label><input type="checkbox" /> Line</label>
+      <label><input type="checkbox" /> Box</label>
+      <label><input type="checkbox" /> Health</label>
+      <label><input type="checkbox" /> Distance</label>
+    </div>
+
+    <div class="content">
+      <label><input type="checkbox" /> Ativar Modo Noturno</label>
+      <label><input type="checkbox" /> Otimizar FPS</label>
+    </div>
+
+    <div class="content">
+      <label><input type="checkbox" /> Reset All</label>
+      <label><input type="checkbox" /> Inject File</label>
+    </div>
+
+    <div class="content freefire-content">
+      <h3>Integração Free Fire</h3>
+      <p>
+        Este painel está configurado para se conectar e operar com o pacote
+        <code>com.dts.freefireth</code>.
+      </p>
+      <p>
+        As funções do painel podem ser associadas a esse pacote para interagir
+        com o jogo Free Fire.
+      </p>
+      <p>Exemplo de objeto de referência para integração:</p>
+      <code>
+        const freefirePackage = "com.dts.freefireth";<br />
+        // Aqui você pode implementar funções para enviar comandos,<br />
+        // injetar arquivos e manipular dados no diretório do jogo.
+      </code>
+      <p>Adicione aqui suas funções específicas para trabalhar com o Free Fire.</p>
+      <button id="injectBtn">Injetar no jogo</button>
+    </div>
+  </div>
+
+  <script>
+    // Array com 100 keys permanentes geradas (50 originais + 50 novas)
+    let permKeys = [
+      "X9T2F8ZQW3YH",
+      "B7N4J5C8D1LK",
+      "M3V2X9PAQ8TZ",
+      "Y6R1WN4LDFGQ",
+      "J2HU9C3XVKPZ",
+      "F81QZED7B5VM",
+      "SC0T3YJGMU2W",
+      "L47DBZF18KXPN",
+      "W89MH5QYCUJ7",
+      "GZL1PRD3KM0X",
+      "V6N3WAHQCZFJ",
+      "T2MJYK07LFNXB",
+      "PQ4SXANR18WV",
+      "DKCRZV95MXYHU",
+      "EJ7FLS3YWMPX",
+      "X5DT29WZBA6K",
+      "C0QVJLMRP4HY",
+      "NZF17BW8YAKVX",
+      "H83DSJXLT9PC",
+      "YRVMPQGLKD7WN",
+      "JAWN30TB8FHRV",
+      "UFJP4KC1X7LMD",
+      "QM2A6EY9NDZCV",
+      "BLR5ZFH7V1WPK",
+      "XJ0KYUGCRWOS6",
+      "V69TCXF8JNMPW",
+      "ZPKJMWRYUS2DF",
+      "LA5QH9TGXEWC0",
+      "M7J0BRFW9DLYS",
+      "S3VZN8CQX4RPM",
+      "XUCKY21FZT7GO",
+      "JPWBM0SRVD9LQ",
+      "F4CT68LRDGXKN",
+      "O7V3YZAQBHPXM",
+      "HSYK5ZT9N1JCG",
+      "WALYJVBPM3XZ2",
+      "FN4EKZGSCRTWP",
+      "MV9LJX0K3IHSY",
+      "DJZ94XGAMRCOV",
+      "RQWXLKY0JVAF78",
+      "NT8YZ13WSUDAM",
+      "BYXKWJU6V5RC98",
+      "ASHZDTFQN140ML",
+      "PG69RXSOYE7VWC",
+      "VJKQ8YWLBXFPMR",
+      "D3FMYQVKCOX2NB",
+      "CLRNZHD18M5XGO",
+      "XE2PU69ZSMJHTY",
+      "OJYXFAR7MT3PQ9",
+      "GZKVDLBH5YSW1A",
+      "H7J9K4M2Q8XLP",
+      "D1WXG5BVZ9A7Y",
+      "Y3LNJV0QPKFBS",
+      "MC8TRK6HS1ZAX",
+      "PV9F0YBLZWX13",
+      "SGKJYLAW7ERUH",
+      "Z0XTFN1GVOPKS",
+      "RLHUJ7KCW2M8DE",
+      "N87YBXGWVOQFZ",
+      "JEMPC3T42RVA6",
+      "WBQSY0RMTZ9XG",
+      "KPLFYDO7CN1VJS",
+      "AG4BWQNY0VZCNT",
+      "XM9JKIH7V2E5UP",
+      "LS1DYCTOZJWMKR",
+      "QVEH8X70PYSDWR",
+      "BZJFWO6PMXS7UA",
+      "CYKLWQV2T1ZJ9HN",
+      "RV35ONJPZA8QGM",
+      "HPBLOYX94JFWVZ",
+      "U12XWVAMFZD6CJ",
+      "FNWC1XBEL0HRZTS",
+      "AOY7VXLQGMN5PJK",
+      "DKZRVWF0J8XH3MS",
+      "G9QF2LPYCWOTKBU",
+      "MYAV6S53XOKJNRZT",
+      "NSC0FPKLUVZ8YJRD",
+      "QB27VYFJGNPWTXAK",
+      "HZREMTI05CWFSXGB",
+      "WXOKUZNJ19LRFVGH",
+      "JYPF4AVX9EWGRS3L",
+      "V8MRQPAWHGJYCKZ0",
+      "SDITJWUEPBZG6L4X",
+      "AN0BOKW2EVRXMC5Y",
+      "MGFTSVRK1HWUCJLO9",
+      "QZALHOPEUI9NC7BT",
+      "FJLDGM01IRAUSXZN",
+      "X6KRM7ZOVWC1BHNS",
+      "PC0AFEMJIHVTXLG9",
+      "BYWTOYUVZLSJM934N",
+      "EJHGZPC2MAWDKO1R",
+      "NQJLWS62FZPKXTAO",
+      "QUXYI9WRKCB3ZDHT",
+      "HGLMCSXVEJ08P2YRN",
+      "OPZWLCIH9DRKQVXGS",
+      "MBJLYNTWROVDSX0CA",
+      "SKFQ6ZYRMIDPTAGXN",
+      "TZ0POWJ8XVKGCSBFE",
+      "RJPCZ9V4WQYEKNTSM"
+    ];
+
+    const loginDiv = document.querySelector(".login");
+    const painelDiv = document.querySelector(".painel");
+    const loginBtn = document.getElementById("loginBtn");
+    const keyInput = document.getElementById("key");
+    const errorMessage = document.getElementById("error");
+    const injectBtn = document.getElementById("injectBtn");
+
+    // Função para verificar se usuário está logado via localStorage
+    function checkLogged() {
+      const access = localStorage.getItem("panelAccess");
+      if (access === "true") {
+        loginDiv.style.display = "none";
+        painelDiv.style.display = "block";
+        initPanelTabs();
+        return true;
+      }
+      return false;
+    }
+
+    // Chamada inicial para verificar se o usuário está logado
+    if (!checkLogged()) {
+      loginDiv.style.display = "flex";
+    }
+
+    loginBtn.addEventListener("click", () => {
+      const key = keyInput.value.trim();
+      // Verifica se a chave existe e não foi usada
+      if (permKeys.includes(key)) {
+        // Remove a chave para uso único
+        permKeys = permKeys.filter(k => k !== key);
+        localStorage.setItem("panelAccess", "true");
+        errorMessage.style.display = "none";
+        loginDiv.style.display = "none";
+        painelDiv.style.display = "block";
+        keyInput.value = "";
+        initPanelTabs();
+      } else {
+        errorMessage.style.display = "block";
+      }
+    });
+
+    // Permite o login ao pressionar Enter
+    keyInput.addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        loginBtn.click();
+      }
+    });
+
+    injectBtn.addEventListener("click", () => {
+      const originalText = injectBtn.textContent;
+      injectBtn.textContent = "Injetando...";
+      injectBtn.disabled = true;
+
+      // Simula delay da injeção (ex: 2s)
+      setTimeout(() => {
+        injectBtn.textContent = "Injetado";
+      }, 2000);
+    });
+
+    function initPanelTabs() {
+      const tabs = document.querySelectorAll(".tab");
+      const contents = document.querySelectorAll(".content");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const index = tab.getAttribute("data-index");
+
+          tabs.forEach((t) => t.classList.remove("active"));
+          contents.forEach((c) => c.classList.remove("active"));
+
+          tab.classList.add("active");
+          contents[index].classList.add("active");
+        });
+      });
+    }
+  </script>
+</body>
+</html>
+

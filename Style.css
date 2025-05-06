@@ -1,0 +1,122 @@
+body {
+  background-color: #1a1a1a;
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.painel,
+.login {
+  background: #2b0000;
+  border: 2px solid red;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  display: none; /* Oculta o painel e o login inicialmente */
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  background: #000;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid #444;
+  transition: 0.2s;
+  user-select: none;
+  min-width: 70px;
+}
+
+.tab:hover {
+  background: #550000;
+}
+
+.tab.active {
+  background: red;
+}
+
+.content {
+  display: none;
+}
+
+.content.active {
+  display: block;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+select,
+input[type="range"] {
+  width: 100%;
+  margin-top: 5px;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+}
+
+.login input {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+}
+
+.freefire-content {
+  color: #f0f0f0;
+}
+
+.freefire-content code {
+  background: #000;
+  padding: 8px;
+  border-radius: 4px;
+  display: block;
+  margin-top: 10px;
+  font-family: monospace;
+  user-select: all;
+}
+
+/* Estilo do botão Injetar */
+#injectBtn {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  background-color: red;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#injectBtn:hover:not(:disabled) {
+  background-color: #b30000;
+}
+
+#injectBtn:disabled {
+  background-color: #7a0000;
+  cursor: default;
+}
